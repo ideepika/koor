@@ -1,9 +1,11 @@
 ## How to Contribute
 
-The Rook project in under [Apache 2.0 license](LICENSE). We accept contributions via
-GitHub pull requests. This document outlines some of the conventions related to
-development workflow, commit message formatting, contact points and other
-resources to make it easier to get your contribution accepted.
+Koor Storage Distribution proprietary code is in folder `ee/` or marked by an
+appropriate license header. The Rook project in under [Apache 2.0
+license](LICENSE). We accept contributions via GitHub pull requests. This
+document outlines some of the conventions related to development workflow,
+commit message formatting, contact points and other resources to make it easier
+to get your contribution accepted.
 
 ## Certificate of Origin
 
