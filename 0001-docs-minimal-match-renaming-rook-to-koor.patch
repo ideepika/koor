@@ -1,0 +1,574 @@
+From df1ce5c9acf282bfbc54566e6b858808e6c69c76 Mon Sep 17 00:00:00 2001
+From: Deepika Upadhyay <deepika@koor.tech>
+Date: Tue, 4 Oct 2022 11:42:55 +0530
+Subject: [PATCH] docs: minimal match renaming rook to koor
+
+- contains files that will and must diverge like CODEOWNERS, ADOPTERS
+
+Signed-off-by: Deepika Upadhyay <deepika@koor.tech>
+---
+ ADOPTERS.md                                   |  65 --------
+ CODE-OWNERS                                   |  26 ++--
+ CONTRIBUTING.md                               |  10 +-
+ .../Contributing/storage-providers.md         |  93 ------------
+ Documentation/media/logo.svg                  |  51 -------
+ Documentation/stylesheets/extra.css           |   8 +-
+ GOVERNANCE.md                                 | 141 ------------------
+ OWNERS.md                                     |  51 -------
+ ROADMAP.md                                    |  40 ++---
+ 9 files changed, 33 insertions(+), 452 deletions(-)
+ delete mode 100644 ADOPTERS.md
+ delete mode 100644 Documentation/Contributing/storage-providers.md
+ delete mode 100644 Documentation/media/logo.svg
+ delete mode 100644 GOVERNANCE.md
+ delete mode 100644 OWNERS.md
+
+diff --git a/ADOPTERS.md b/ADOPTERS.md
+deleted file mode 100644
+index 47a85d5a6..000000000
+--- a/ADOPTERS.md
++++ /dev/null
+@@ -1,65 +0,0 @@
+-# Rook Adopters
+-
+-Below is a list of adopters of Rook in **production environments** that have publicly shared the
+-details of their usage as well as the benefits provided by Rook that their business relies on. There
+-are additional adopters of Rook, especially those with on-premises deployments, that are not ready
+-to share the details of their usage publicly at this time.
+-
+-* [Calit2 (California Institute for Telecommunications and Information
+-  Technology)](http://www.calit2.net/) is one of 4 institutes formed by a joint partnership of
+-  University of California and the state of California with the goal of *"inventing the university
+-  research environment of the future"*.  They operate one of the largest known Rook clusters in
+-  production and they are using Rook to provide cheap, reliable, and fast storage to scientific
+-  users.
+-* [NAV (Norwegian Labour and Welfare Administration)](https://www.nav.no/) is the current Norwegian
+-  public welfare agency, responsible for 1/3 of the state budget of Norway. They find a massive
+-  simplification of management and maintenance for their Ceph clusters by adopting Rook.
+-* [Replicated](https://www.replicated.com/) delivers *"SaaS On-Prem"* and are the creators of
+-  open-source [kURL](https://kurl.sh/): a custom Kubernetes distro creator that software vendors use
+-  to package and distribute production-grade Kubernetes infrastructure. Rook is a default add-on in
+-  kURL, so all installations include Rook to manage highly available storage that the software
+-  vendor can depend on.
+-* [Discogs](https://www.discogs.com/) is building the largest and most comprehensive music database
+-  and marketplace in the world and services millions of users all across the globe. Rook enables
+-  them to save both time and money in the long term and allows their IT operations team to function
+-  with fewer dedicated staff.
+-* [Finleap Connect](https://connect.finleap.com/) offers a full range of leading fintech solutions
+-  to financial institutions across Europe. Rook has been running flawlessly for them across many
+-  versions and upgrades, and delivers the performance and resilience they require for their most
+-  critical business applications.
+-* [Centre of Excellence in Next Generation Networks (CENGN)](https://www.cengn.ca) is on a mission
+-  to accelerate the growth of the Canadian Information and Communications Technology (ICT) sector.
+-  The Rook Ceph operator is key to the Kubernetes clusters frequently set up for projects by
+-  small-medium enterprises in the CENGN labs.
+-* [Avisi](https://www.avisi.nl/) develops and operates software for organizations like the Dutch
+-  Notary Association. They have survived multiple disaster scenarios already with Rook and it has
+-  made their cloud native journey in the private cloud so much easier by providing a powerful tool
+-  that lets them take advantage of a mature storage product with ease and peace of mind.
+-* [Geodata](https://geodata.no/) Provides geospatial services and Geographical Information Systems
+-  (GIS).  The latest versions of Rook have amazed them, especially compared to many of the other
+-  storage options they have attempted in the cloud native ecosystem.
+-* [Informatik Computer Cloud (ICC)](https://icc.informatik.haw-hamburg.de/) at the Hamburg
+-  University of Applied Sciences to provide a seamless, fast, flexible and reliable storage service
+-  to its staff and students.
+-* [Gini](https://gini.net/en/) uses Ceph with Rook to provide a redundant and stable S3-compatible
+-  storage infrastructure for their services in order to provide the world's most advanced digital
+-  everyday assistant to their users.
+-* [Cloudways](https://www.cloudways.com/en/) utilizes the flexibility of Rook's orchestration of
+-  Ceph for their users, taking advantage of the fast I/O with block storage as well as multiple
+-  readers and writers of shared filesystem storage.
+-* [Crowdfox](https://www.crowdfox.com/crowdfox.html) believes in strong community projects and are
+-  therefore putting their bets on Rook.  They were able to seamlessly migrate VMs between host nodes
+-  with zero downtime thanks to Rook.
+-* [Radio Sound](https://radiosound.com/) uses Rook to power their website and GitLab for their CI/CD
+-  pipeline, because of the truly cloud-native experience, like *"a little drop of the Google magic
+-  in our own server rack"*.
+-* [CyCore Systems](https://www.cycoresys.com/)
+-* [Datacom](http://datacom.co.nz/Home.aspx)
+-* [Turtle Network (BLACK TURTLE BVBA)](https://www.turtlenetwork.eu/#home)
+-* [LeanNet Ltd.](https://leannet.eu/)
+-* [FHE3 GmbH](https://www.fhe3.com/)
+-* [infraBuilder](https://infrabuilder.com/)
+-* [GreenCom Networks](http://www.greencom-networks.com/en)
+-
+-There are many additional adopters of Rook in the evaluating phase that will be added to this list
+-as they transition to production deployments.
+diff --git a/CODE-OWNERS b/CODE-OWNERS
+index 7a03e0c47..c37c5d0b5 100644
+--- a/CODE-OWNERS
++++ b/CODE-OWNERS
+@@ -1,15 +1,13 @@
+-# Code ownership file that specifies approvers and reviewers for the Rook codebase.
+-# Approvers have push access to merge PRs after approved by another approver or reviewer.
+-# An approver is equivalent to a Rook maintainer for all intents and purposes as described in the Rook governance.
++# Code ownership file that specifies maintainers and reviewers for all areas of the Koor Storage Distribution codebase.
++# all: These members have the given role for all areas of the codebase.
++# Specific storage provider ownership and covers all portions of code that is specific to their project.
++# Maintainers have push access to merge PRs after approved by another maintainer or reviewer.
++# With the intention of using the Prow bot in the future, the term "approver" is used below.
++# An approver is equivalent to a Koor Storage Distribution maintainer for all intents and purposes as described in the Koor Storage Distribution governance.
++
++areas:
++  all:
++    approvers:
++      - gauravsitlani
++      - galexrt
+ 
+-approvers:
+-- travisn
+-- galexrt
+-- jbw976
+-- BlaineEXE
+-- leseb
+-- satoru-takeuchi
+-reviewers:
+-- Madhu-1
+-- sp98
+-- subhamkrai
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index fbe8d0c1f..d447873cc 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -1,9 +1,11 @@
+ ## How to Contribute
+ 
+-The Rook project in under [Apache 2.0 license](LICENSE). We accept contributions via
+-GitHub pull requests. This document outlines some of the conventions related to
+-development workflow, commit message formatting, contact points and other
+-resources to make it easier to get your contribution accepted.
++Koor Storage Distribution proprietary code is in folder `ee/` or marked by an
++appropriate license header. The Rook project in under [Apache 2.0
++license](LICENSE). We accept contributions via GitHub pull requests. This
++document outlines some of the conventions related to development workflow,
++commit message formatting, contact points and other resources to make it easier
++to get your contribution accepted.
+ 
+ ## Certificate of Origin
+ 
+diff --git a/Documentation/Contributing/storage-providers.md b/Documentation/Contributing/storage-providers.md
+deleted file mode 100644
+index 311dc1599..000000000
+--- a/Documentation/Contributing/storage-providers.md
++++ /dev/null
+@@ -1,93 +0,0 @@
+----
+-title: Storage Providers
+----
+-
+-Rook is the home for operators for multiple storage providers. Each of these storage providers
+-has specific requirements and each of them is very independent. There is no runtime dependency
+-between the storage providers. Development is where the storage providers benefit from one another.
+-
+-Rook provides a development framework with a goal of enabling storage providers to create
+-operators for Kubernetes to manage their storage layer. As the storage provider community
+-grows, we expect this framework to grow as common storage constructs are identified
+-that will benefit the community. Rook does not aim to replace other frameworks or
+-communities, but to fill gaps not provided by other core projects.
+-
+-Storage providers in Rook are currently built on the [Controller Runtime](https://github.com/kubernetes-sigs/controller-runtime),
+-but may also be built on other frameworks such as the [Operator SDK](https://sdk.operatorframework.io/)
+-or [Kubebuilder](https://github.com/kubernetes-sigs/kubebuilder). The choice of the
+-underlying framework is up to the storage provider.
+-
+-Rook does not aim to be a general framework for storage, but to provide a
+-very specific set of helpers to meet the storage provider needs in the Rook project.
+-
+-## Rook Framework
+-
+-Rook provides the following framework to assist storage providers in building an operator:
+-
+-* Common golang packages shared by storage providers are in the main [Rook repo](https://github.com/rook/rook).
+-* Common build scripts for building the operator images are in the main
+-  [Rook repo](https://github.com/rook/rook/tree/master/build).
+-* Each provider has its own repo under the [Rook org](https://github.com/rook).
+-  * Multiple community members are given push access to the repo, including
+-    owners of the storage provider, Rook steering committee members,
+-    and other Rook maintainers if deemed helpful or necessary by the steering
+-    committee. Maintainers for the new provider are added according to the
+-    [governance](https://github.com/rook/rook/blob/master/GOVERNANCE.md).
+-  * Providers added to Rook prior to 2020 are grandfathered into the main
+-    [Rook repo](https://github.com/rook/rook).
+-* Storage providers must follow the Rook [governance](https://github.com/rook/rook/blob/master/GOVERNANCE.md)
+-  in the interest of the good of the overall project. Storage providers have
+-  autonomy in their feature work, while collaboration with the community
+-  is expected for shared features.
+-* A quarterly release cadence is in place for the operators in the main Rook repo.
+-  Operators in their own repo define their own cadence and versioning scheme as desired.
+-  * Storage providers own their release process, while following Rook best practices to
+-    ensure high quality.
+-  * Each provider owns independent CI based on GitHub actions, with patterns and build
+-    automation that can be re-used by providers
+-* Docker images are pushed to the [Rook DockerHub](https://hub.docker.com/u/rook) where
+-  each storage provider has its own repo.
+-* Helm charts are published to [charts.rook.io](https://charts.rook.io/release)
+-* Documentation for the storage provider is to be written by the storage provider
+-  members. The build process will publish the documentation to the [Rook website](https://rook.io/docs/rook/latest/).
+-* All storage providers are added to the [Rook.io website](https://rook.io/)
+-* A great Slack community is available where you can communicate amongst developers and users
+-
+-## Considering Joining Rook?
+-
+-If you own a storage provider and are interested in joining the Rook project to create
+-an operator, please consider the following:
+-
+-* You are making a clear commitment to the development of the storage provider.
+-  Creating an operator is not a one-time engineering cost, but is a long term commitment
+-  to the community.
+-* Support for a storage provider in Rook requires dedication and community support.
+-* Do you really need an operator? Many storage applications (e.g. CSI drivers)
+-  can be deployed with tools such as a Helm chart and don't really need the
+-  flexibility of an operator.
+-* Joining Rook is also about community, not just the framework.
+-
+-## Engineering Requirements
+-
+-The engineering costs of each storage provider include:
+-
+-* Develop the operator
+-* Rook maintainers will help answer questions along the way, but ultimately
+-  you own the development
+-* If there are test failures in the CI, they should be investigated in a timely manner
+-* If issues are opened in GitHub, they need investigation and triage to provide
+-  expectations about the priority and timeline
+-* If users have questions in Slack, they should be answered in a timely manner.
+-  Community members can also be redirected to other locations if desired for the provider.
+-* A regular cadence of releases is expected. Software always needs to evolve with new versions
+-  of K8s, accommodate new features in the storage provider, etc.
+-* Each provider maintains a ROADMAP.md in the root of their repo, updates it regularly
+-  (e.g. quarterly or with the release cadence), and provides input to the overall Rook
+-  [roadmap](https://github.com/rook/rook/blob/master/ROADMAP.md) for common features.
+-
+-### Inactive Providers
+-
+-If a storage provider does not have engineering resources, Rook cannot claim to support it.
+-After some months of inactivity Rook will deprecate a storage provider. The timing
+-will be decided on a case by case basis by the steering committee. The repo and other artifacts
+-for deprecated storage providers will be left intact for reference.
+diff --git a/Documentation/media/logo.svg b/Documentation/media/logo.svg
+deleted file mode 100644
+index eeb1d38df..000000000
+--- a/Documentation/media/logo.svg
++++ /dev/null
+@@ -1,51 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+-	 viewBox="0 0 1091.9 228.8" style="enable-background:new 0 0 1091.9 228.8;" xml:space="preserve">
+-<style type="text/css">
+-	.st0{fill:#2B2B2B;}
+-</style>
+-<g>
+-	<g>
+-		<g>
+-			<path class="st0" d="M178.8,222.8H76.7c-26.6,0-48.3-21.7-48.3-48.3V94.7c0-3.8,3.1-6.9,6.9-6.9h184.8c3.8,0,6.9,3.1,6.9,6.9
+-				v79.9C227.1,201.1,205.4,222.8,178.8,222.8z M42.3,101.6v73c0,19,15.5,34.5,34.5,34.5h102.1c19,0,34.5-15.5,34.5-34.5v-73H42.3z"
+-				/>
+-		</g>
+-		<g>
+-			<path class="st0" d="M151.9,186.3h-48.3c-3.8,0-6.9-3.1-6.9-6.9v-24.1c0-17.1,13.9-31,31-31s31,13.9,31,31v24.1
+-				C158.8,183.2,155.7,186.3,151.9,186.3z M110.5,172.5H145v-17.2c0-9.5-7.7-17.2-17.2-17.2s-17.2,7.7-17.2,17.2V172.5z"/>
+-		</g>
+-		<g>
+-			<path class="st0" d="M220.2,74.7C220.2,74.7,220.2,74.7,220.2,74.7L183,74.7c-3.8,0-6.9-3.1-6.9-6.9c0-3.8,3.1-6.9,6.9-6.9
+-				c0,0,0,0,0,0l30.2,0.1V19.8h-23.2v11.6c0,1.8-0.7,3.6-2,4.9c-1.3,1.3-3,2-4.9,2l0,0l-37,0c-3.8,0-6.9-3.1-6.9-6.9V19.8h-23.2
+-				v11.6c0,3.8-3.1,6.9-6.9,6.9l-37,0c-1.8,0-3.6-0.7-4.9-2s-2-3-2-4.9V19.8H42.3v41.2h29.9c3.8,0,6.9,3.1,6.9,6.9
+-				c0,3.8-3.1,6.9-6.9,6.9H35.4c-3.8,0-6.9-3.1-6.9-6.9v-55c0-3.8,3.1-6.9,6.9-6.9h37c3.8,0,6.9,3.1,6.9,6.9v11.6l23.2,0V12.9
+-				c0-3.8,3.1-6.9,6.9-6.9h37c3.8,0,6.9,3.1,6.9,6.9v11.6l23.2,0V12.9c0-3.8,3.1-6.9,6.9-6.9h37c3.8,0,6.9,3.1,6.9,6.9v55
+-				c0,1.8-0.7,3.6-2,4.9C223.8,74,222,74.7,220.2,74.7z"/>
+-		</g>
+-	</g>
+-	<g>
+-		<path class="st0" d="M432.4,202.2l-40.2-56.5c-4.5,0.5-9.2,0.8-14.1,0.8h-47.2v55.7h-18.6V26.5h65.8c22.4,0,40,5.4,52.7,16.1
+-			c12.7,10.7,19.1,25.4,19.1,44.2c0,13.7-3.5,25.3-10.4,34.8c-6.9,9.5-16.9,16.3-29.7,20.5l42.9,60.3H432.4z M417.5,119.2
+-			c9.2-7.7,13.8-18.5,13.8-32.4c0-14.2-4.6-25.1-13.8-32.8c-9.2-7.6-22.5-11.4-39.9-11.4h-46.7v88.1h46.7
+-			C395,130.7,408.3,126.9,417.5,119.2z"/>
+-		<path class="st0" d="M523.4,192.1c-14.1-7.8-25.2-18.5-33.1-32c-8-13.6-11.9-28.8-11.9-45.7c0-16.9,4-32.1,11.9-45.7
+-			c7.9-13.6,19-24.2,33.1-32c14.1-7.8,29.9-11.7,47.3-11.7c17.4,0,33.1,3.9,47.1,11.5c14,7.7,25,18.4,33,32
+-			c8,13.6,12.1,28.9,12.1,45.8c0,16.9-4,32.2-12.1,45.8c-8,13.6-19,24.3-33,32c-14,7.7-29.7,11.5-47.1,11.5
+-			C553.3,203.8,537.5,199.9,523.4,192.1z M608.3,177.8c11.2-6.3,20-15,26.4-26.1c6.4-11.1,9.5-23.6,9.5-37.3
+-			c0-13.7-3.2-26.1-9.5-37.3C628.3,66,619.5,57.3,608.3,51c-11.2-6.3-23.8-9.4-37.7-9.4c-13.9,0-26.5,3.1-37.8,9.4
+-			c-11.3,6.3-20.2,15-26.6,26.1c-6.4,11.1-9.7,23.6-9.7,37.3c0,13.7,3.2,26.2,9.7,37.3c6.4,11.1,15.3,19.8,26.6,26.1
+-			c11.3,6.3,23.9,9.4,37.8,9.4C584.6,187.2,597.1,184,608.3,177.8z"/>
+-		<path class="st0" d="M734,192.1c-14.1-7.8-25.2-18.5-33.1-32c-8-13.6-11.9-28.8-11.9-45.7c0-16.9,4-32.1,11.9-45.7
+-			c7.9-13.6,19-24.2,33.1-32c14.1-7.8,29.9-11.7,47.3-11.7c17.4,0,33.1,3.9,47.1,11.5c14,7.7,25,18.4,33,32
+-			c8,13.6,12.1,28.9,12.1,45.8c0,16.9-4,32.2-12.1,45.8c-8,13.6-19,24.3-33,32c-14,7.7-29.7,11.5-47.1,11.5
+-			C763.9,203.8,748.1,199.9,734,192.1z M819,177.8c11.2-6.3,20-15,26.4-26.1c6.4-11.1,9.5-23.6,9.5-37.3c0-13.7-3.2-26.1-9.5-37.3
+-			C839,66,830.2,57.3,819,51c-11.2-6.3-23.8-9.4-37.7-9.4c-13.9,0-26.5,3.1-37.8,9.4c-11.3,6.3-20.2,15-26.6,26.1
+-			c-6.4,11.1-9.7,23.6-9.7,37.3c0,13.7,3.2,26.2,9.7,37.3c6.4,11.1,15.3,19.8,26.6,26.1c11.3,6.3,23.9,9.4,37.8,9.4
+-			C795.2,187.2,807.7,184,819,177.8z"/>
+-		<path class="st0" d="M969.6,119.7l-35.9,36.4v46.2h-18.6V26.5h18.6v106.2l103.2-106.2h21.3l-76.1,79.6l81.3,96.1h-22.1
+-			L969.6,119.7z"/>
+-	</g>
+-</g>
+-</svg>
+diff --git a/Documentation/stylesheets/extra.css b/Documentation/stylesheets/extra.css
+index 4d474129a..9bcc80cea 100644
+--- a/Documentation/stylesheets/extra.css
++++ b/Documentation/stylesheets/extra.css
+@@ -1,3 +1,7 @@
+-[data-md-color-primary="rook-blue"] {
+-    --md-primary-fg-color: #2ac6ea;
++:root {
++  --md-primary-fg-color: #19dda5;
++  --md-accent-fg-color: #cb2864;
+ }
++
++.md-header {
++  background-color: #1d2628;
+diff --git a/GOVERNANCE.md b/GOVERNANCE.md
+deleted file mode 100644
+index 91e7cd108..000000000
+--- a/GOVERNANCE.md
++++ /dev/null
+@@ -1,141 +0,0 @@
+-# Rook Governance
+-
+-This document defines governance policies for the Rook project.
+-
+-## Steering Committee
+-
+-Steering committee members demonstrate a strong commitment to the project with views in the interest of the broader Rook project.
+-
+-Responsibilities include:
+-
+-* Own the overall direction of the Rook project
+-* Provide guidance for the project maintainers and oversee the process for adding new maintainers
+-* Participate in the [conflict resolution and voting process](#conflict-resolution-and-voting) when necessary
+-* Actively participate in the regularly scheduled steering committee meetings
+-* Regularly attend the recurring [community meetings](README.md#community-meeting)
+-
+-The current list of steering committee members is published and updated in [OWNERS.md](OWNERS.md#steering-committee).
+-
+-### Becoming a Steering Committee Member
+-
+-* Each storage provider has at most a single member on the steering committee.
+-* Storage providers declared as stable in Rook should have a representative on the steering committee.
+-* Storage providers that are on track to be declared stable soon may have a representative on the steering committee.
+-* Steering committee members are likely members of the Rook maintainers group and are contributing consistently to Rook.
+-  If the member (or proposed member) is not a maintainer, they must have demonstrated consistent vision and input
+-  for the good of the project with the big picture in mind.
+-* No company may hold the majority seats on the steering committee. If this happens due to changing companies,
+-  a member of the committee from that company must be replaced.
+-
+-If you meet these requirements, express interest to the steering committee directly that your organization is interested in joining the steering committee.
+-
+-### Removing a steering committee member
+-
+-If a steering committee member is no longer interested or cannot perform the duties listed above, they
+-should volunteer to be moved to emeritus status. In extreme cases this can also occur by a vote of
+-the steering committee members per the voting process below.
+-
+-## Maintainer Role
+-
+-Maintainers have the most experience with the Rook project and are expected to have the knowledge
+-and insight to lead the project's growth and improvement.
+-
+-Responsibilities include:
+-
+-* Represent their organization and storage provider within the Rook community
+-* Strong commitment to the project
+-* Participate in design and technical discussions
+-* Contribute non-trivial pull requests
+-* Perform code reviews on other's pull requests
+-* Regularly triage GitHub issues. The areas of specialization listed in [OWNERS.md](OWNERS.md) can be used to help with routing
+-  an issue/question to the right person.
+-* Make sure that ongoing PRs are moving forward at the right pace or closing them
+-* Monitor Rook email aliases
+-* Monitor Rook Slack (delayed response is perfectly acceptable), particularly for the area of your
+-  storage provider
+-* Regularly attend the recurring [community meetings](README.md#community-meeting)
+-* Periodically attend the recurring steering committee meetings to provide input
+-* In general continue to be willing to spend at least 25% of ones time working on Rook (~1.25
+-  business days per week)
+-
+-The current list of maintainers is published and updated in [OWNERS.md](OWNERS.md#maintainers).
+-
+-### Reviewer Role
+-
+-Reviewers have similar responsibilities as maintainers, with the differences listed in the [Change Approval](CONTRIBUTING.md#change-approval)
+-roles of the developer guide. Rules for adding and removing reviewers will follow the same guidelines as
+-adding and removing maintainers as described below.
+-
+-### Becoming a maintainer
+-
+-To become a maintainer you need to demonstrate the following:
+-
+-* Consistently be seen as a leader in the Rook community by fulfilling the Maintainer responsibilities
+-  listed above to some degree.
+-* Domain expertise for at least one of the Rook storage providers
+-* Be extremely proficient with Kubernetes and Golang
+-* Consistently demonstrate:
+-  * Ability to write good solid code
+-  * Ability to collaborate with the team
+-  * Understanding of how the team works (policies, processes for testing and code review, etc.)
+-  * Understanding of the project's code base and coding style
+-
+-Beyond your contributions to the project, consider:
+-
+-* If your storage provider or organization already have a Rook maintainer, more maintainers may not be needed.
+-  A valid reason is "blast radius" for a large storage provider or organization
+-* Becoming a maintainer generally means that you are going to be spending substantial time (>25%)
+-  on Rook for the foreseeable future.
+-
+-If you are meeting these requirements, express interest to the [steering committee](OWNERS.md#steering-committee) directly that your
+-organization is interested in adding a maintainer.
+-
+-* We may ask you to do some PRs from our backlog.
+-* As you gain experience with the code base and our standards, we will ask you to do code reviews
+-  for incoming PRs (i.e., all maintainers are expected to shoulder a proportional share of
+-  community reviews).
+-* After a period of approximately 2-3 months of working together and making sure we see eye to eye,
+-  the steering committee will confer and decide whether to grant maintainer status or not.
+-  We make no guarantees on the length of time this will take, but 2-3 months is the approximate
+-  goal.
+-
+-### Removing a maintainer
+-
+-If a maintainer is no longer interested or cannot perform the maintainer duties listed above, they
+-should volunteer to be moved to emeritus status. In extreme cases this can also occur by a vote of
+-the maintainers per the voting process below.
+-
+-
+-### GitHub Project Administration
+-
+-Maintainers will be added to the Rook GitHub organization (if they are not already) and added to
+-the GitHub Maintainers team.
+-
+-## Updating Change Approval Roles
+-
+-The full change approval process is described in the [contributing guide](CONTRIBUTING.md#change-approval).
+-
+-All new steering committee members and maintainers must be nominated by someone (anyone) opening a pull request that adds the nominated person’s name to the appropriate [`CODE-OWNERS`](CODE-OWNERS) files in the appropriate roles.
+-Similarly, to remove a steering committee member or maintainer, a pull request should be opened that removes their name from the appropriate [`CODE-OWNERS`](CODE-OWNERS) files.
+-
+-The steering committee will approve this update in the standard voting and conflict resolution process.
+-Note that new nominations do not go through the standard pull request approval described in the [contributing guide](CONTRIBUTING.md#change-approval).
+-Only the steering committee team can approve updates of members to the steering committee or maintainer roles.
+-
+-## Conflict resolution and voting
+-
+-In general, we prefer that technical issues and maintainer membership are amicably worked out
+-between the persons involved. If a dispute cannot be decided independently, the steering committee can be
+-called in to decide an issue. If the steering committee members themselves cannot decide an issue, the issue will
+-be resolved by voting. The voting process is a simple majority in which each steering committee member gets a single vote,
+-except as noted below. Maintainers do not have a vote in conflict resolution, although steering committee members
+-should consider their input.
+-
+-For formal votes, a specific statement of what is being voted on should be added to the relevant
+-GitHub issue or PR. Steering committee members should indicate their yes/no vote on that issue or PR, and after a
+-suitable period of time (goal is by 5 business days), the votes will be tallied and the outcome
+-noted. If any steering committee members are unreachable during the voting period, postponing the completion of
+-the voting process should be considered.
+-
+-Additions and removals of steering committee members or maintainers require a **2/3 majority**, while other decisions and changes
+-require only a simple majority.
+diff --git a/OWNERS.md b/OWNERS.md
+deleted file mode 100644
+index 127ffb4a1..000000000
+--- a/OWNERS.md
++++ /dev/null
+@@ -1,51 +0,0 @@
+-# Rook Contributors
+-
+-This page lists all active contributors and their areas of expertise. This can be used for routing PRs, questions, etc. to the right place.
+-
+-* See [CONTRIBUTING.md](CONTRIBUTING.md) for general contribution guidelines.
+-* See [GOVERNANCE.md](GOVERNANCE.md) for governance guidelines and steering committee and maintainer responsibilities.
+-
+-## Steering Committee
+-
+-Steering committee members will be added according to the [process for adding a steering committee member](GOVERNANCE.md#becoming-a-steering-committee-member) in the [governance](GOVERNANCE.md).
+-
+-| Name                                 | Represents  | GitHub                                |
+-| ------------------------------------ | ----------- |---------------------------------------|
+-| Travis Nielsen <tnielsen@redhat.com> | Ceph        | [travisn](https://github.com/travisn) |
+-| Jared Watts <jared@upbound.io>       | Independent | [jbw976](https://github.com/jbw976)   |
+-
+-## Maintainers
+-
+-Maintainers will be added according to the [process for adding a maintainer](GOVERNANCE.md#becoming-a-maintainer) in the [governance](GOVERNANCE.md).
+-
+-* Travis Nielsen <tnielsen@redhat.com> ([travisn](https://github.com/travisn))
+-  * Ceph, Operators/Orchestration
+-* Jared Watts <jared@upbound.io> ([jbw976](https://github.com/jbw976))
+-  * Framework, APIs
+-* Alexander Trost <galexrt@googlemail.com> ([galexrt](https://github.com/galexrt))
+-  * Ceph, Operators/Orchestration, User support
+-* Sebastien Han <shan@redhat.com> ([leseb](https://github.com/leseb))
+-  * Ceph
+-* Blaine Gardner <blaine.gardner@redhat.com> ([BlaineEXE](https://github.com/BlaineEXE))
+-  * Ceph
+-* Yannis Zarkadas <yanniszarkadas@gmail.com> ([yanniszark](https://github.com/yanniszark))
+-  * Cassandra
+-* Satoru Takeuchi <satoru.takeuchi@gmail.com> ([satoru-takeuchi](https://github.com/satoru-takeuchi))
+-  * Ceph
+-
+-## Emeritus maintainers
+-
+-This list will be updated according to the [process for removing a maintainer](GOVERNANCE.md#removing-a-maintainer) in the [governance](GOVERNANCE.md).
+-
+-* Bassam Tabbara <bassam@upbound.io> ([bassam](https://github.com/bassam))
+-* Dmitry Yusupov <dmitry.yusupov@gmail.com> ([dyusupov](https://github.com/dyusupov))
+-
+-## Code Owners
+-
+-Code owners, as described in the [change approval process](GOVERNANCE.md#change-approval) of the governance, can be found in [`CODE-OWNERS`](CODE-OWNERS) files.
+-
+-## Community
+-
+-We are grateful for the countless members of the community who contribute to Rook,
+-whether reporting issues in GitHub or Slack or submitting code or documentation PRs.
+-Thank you for helping this project to grow and mature!
+diff --git a/ROADMAP.md b/ROADMAP.md
+index 78c4e6b89..14fe475e9 100644
+--- a/ROADMAP.md
++++ b/ROADMAP.md
+@@ -1,35 +1,13 @@
+ # Roadmap
+ 
+-This document defines a high level roadmap for Rook development and upcoming releases.
+-The features and themes included in each milestone are optimistic in the sense that some do not have clear owners yet.
+-Community and contributor involvement is vital for successfully implementing all desired items for each release.
+-We hope that the items listed below will inspire further engagement from the community to keep Rook progressing and shipping exciting and valuable features.
++This document defines a high level roadmap for the Koor Storage Distribution
++development and upcoming releases. The features and themes included in each
++milestone are optimistic in the sense that some do not have clear owners yet.
++Community and contributor involvement is vital for successfully implementing all
++desired items for each release.
+ 
+-Any dates listed below and the specific issues that will ship in a given milestone are subject to change but should give a general idea of what we are planning.
+-See the [GitHub project boards](https://github.com/rook/rook/projects) for the most up-to-date issues and their status.
++We hope that the items listed below will inspire further engagement from the
++community to keep Koor Storage Distribution progressing and shipping exciting
++and valuable features.
+ 
+-## Rook Ceph 1.10
+-
+-The following high level features are targeted for Rook v1.10 (early August 2022). For more detailed project tracking see the [v1.10 board](https://github.com/rook/rook/projects/26).
+-
+-* Remove support for Ceph Octopus (support remains for Pacific and Quincy) [#10338](https://github.com/rook/rook/issues/10338)
+-* Add command to the [krew plugin](https://github.com/rook/kubectl-rook-ceph) to analyze cluster health and advise on resolving common health issues [Krew #32](https://github.com/rook/kubectl-rook-ceph/issues/32)
+-* Check for existing subvolumes before allowing a filesystem to be uninstalled [#9915](https://github.com/rook/rook/pull/9915)
+-* Use more specific cephx accounts to better differentiate the source of Ceph configuration changes [#10169](https://github.com/rook/rook/issues/10169)
+-* Automate node fencing for application failover in some scenarios [#1507](https://github.com/rook/rook/issues/1507)
+-* Object Store
+-  * Service account authentication with the Vault agent [#9872](https://github.com/rook/rook/pull/9872)
+-  * Support for AWS Server Side Encryption (SSE) [#10318](https://github.com/rook/rook/pull/10318)
+-  * Improvements to RGW Multisite configuration [#10323](https://github.com/rook/rook/pull/10323)
+-
+-
+-## Themes
+-
+-The general areas for improvements include the following, though may not be committed to a release.
+-
+-* Add alpha support for COSI (Container object storage interface) with K8s 1.24 [#7843](https://github.com/rook/rook/issues/7843)
+-* OSD encryption key rotation [#7925](https://github.com/rook/rook/issues/7925)
+-* Simplify metadata backup and disaster recovery [#3985](https://github.com/rook/rook/issues/3985)
+-* Strengthen approach for OSDs on PVCs for a more seamless K8s management of underlying storage
+-* CSI Driver improvements tracked in the [CSI repo](https://github.com/ceph/ceph-csi)
+-  * Support for Windows nodes
++See the [GitHub project boards](https://github.com/koor-tech/koor/projects) for the most up-to-date issues and their status.
+-- 
+2.34.1
+
