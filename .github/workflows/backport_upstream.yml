@@ -1,19 +1,34 @@
 name: Backport rook/rook upstream cronjob
+# on:
+#   # Triggers the workflow every 5 minutes
+#   schedule:
+#     - cron: "0 11 * * *"
 on:
-  # Triggers the workflow every 5 minutes
-  schedule:
-    - cron: "0 11 * * *"
-defaults:
-  run:
-    # reference: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#using-a-specific-shell
-    shell: bash --noprofile --norc -eo pipefail -x {0}
+  push:
+    tags:
+      - v*
+    branches:
+      - master
+      - release-*
+  pull_request:
+    branches:
+      - master
+      - release-*
+
+ defaults:
+   run:
+     # reference: https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#using-a-specific-shell
+     shell: bash --noprofile --norc -eo pipefail -x {0}
 
 permissions:
   contents: read
 
 jobs:
   push-commits-to-koor-repo:
-    runs-on: ubuntu-20.04
+    name: Push commits to Koor Repo
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: github.repository == 'koor-tech/koor'
     steps:
       - name: checkout
@@ -22,7 +37,7 @@ jobs:
           fetch-depth: 0
       - name: pull rook upstream commits from latest master and create a PR
         env:
-          GITHUB_TOKEN: ${{ secrets.GIT_API_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ee/scripts/rebase_rook_master.sh
           # if PR already exists, we simply push to it other open a PR
